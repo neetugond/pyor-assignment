@@ -6,21 +6,52 @@ import * as echarts from 'echarts'
 
 const LineChart = () => {
     const [dropdownSelect, setDropdownSelect] = useState('ethereum');
+    const [chartData, setChartData] = useState([])
+
     useEffect(() => {
         fetchData(); 
     }, [dropdownSelect])
     
     const url = `https://api.coingecko.com/api/v3/coins/${dropdownSelect}/market_chart?vs_currency=usd&days=365&interval=daily`
-    
+
     const fetchData = async () => {
        try {
            const response = await axios.get(url);
            const data = response.data.prices;
-           console.log(data)
+           setChartData(data.slice(0,100))
+        //    console.log(data)
+           lineChart(data)
             
         } catch (error) {
             console.log(error)
         }
+    }
+    const lineChart = (data) => {
+        const chartElement = document.getElementById('lineChartMainDiv');
+        const chart = echarts.init(chartElement, 'dark')
+        const option = {
+            tooltip: {
+              trigger: "axis",
+            },
+            xAxis: {
+              type: "time",
+              boundaryGap: false,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                areaStyle: {},
+                type: "line",
+                data: data.map(([timestamp, value]) => ({
+                  name: new Date(timestamp).toLocaleDateString(),
+                  value: [timestamp, value],
+                })),
+              },
+            ],
+        };
+        chart.setOption(option)
     }
     return (
         <>
@@ -35,6 +66,13 @@ const LineChart = () => {
                     <option value="arbitrum">Arbitrum</option>
                     <option value="optimism">Optimism</option>
                 </select>
+                </div>
+                <p className='chart-heading'>
+                    Price Chart - {dropdownSelect[0].toUpperCase()+ dropdownSelect.slice(1)}
+                </p>
+                <div id="lineChartMainDiv"className="chartContainer"
+                style={{width: '100wh', height:'500px'}}>
+                    
                 </div>
 
                 
