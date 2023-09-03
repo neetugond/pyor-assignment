@@ -1,0 +1,39 @@
+.dropdown-main-container{
+    background-color: black;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-select{
+    padding: 10% 20%;
+    background-color: rgb(72, 72, 72);
+    border-radius: 6px;
+    color: white;
+}
+.chart-heading{
+    /* border: 2px solid red; */
+    background-color: black;
+    width: 75%;
+    color: white;
+    padding-right:8% ;
+}
+.text-main-div{
+    display: flex;
+    padding: 10px;
+    background-color: black;
+    padding-left: 5%;
+
+}
+.circle-div{
+    /* border: 1px solid red; */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: blue;
+}
+.text-main-div h4{
+    margin: 0;
+    padding-left: 10px;
+    color: white;
+}
